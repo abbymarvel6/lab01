@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ <style>    
+    table.content, th.data, td.data {
+        border: 1px solid;
+    }
+  </style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $("table.content").html('');
+    $("table.content").append(`<tr>
+        <th class="data">Nama Barang</th>
+        <th class="data">Harga Barang</th>
+        <th class="data">Deskripsi</th>
+        </tr>`)
+    $.get('/wishlist/json', function (data) {
+        data.map((singleData) =>
+        $("table.content").append(`<tr>
+        <td class="data">${singleData.fields.nama_barang}</td>
+        <td class="data">${singleData.fields.harga_barang}</td>
+        <td class="data">${singleData.fields.deskripsi}</td>
+        </tr>`)
+        );
+        });
+  });
+});
+</script>
+
+</head>
+<body>
+  <h1>Barang di Wishlist</h1>
+
+    <button>Get JSON data</button>
+
+    <table class="content"></table>
+
+
+</body>
+</html>
+
+{% endblock content %}
